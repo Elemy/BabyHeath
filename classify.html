@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>baby</title>
+	<link rel="stylesheet" type="text/css" href="css/new.css">
+	<link rel="stylesheet" type="text/css" href="css/classify.css">
+</head>
+<body>
+	<div id="header"><span>&times;</span></div>
+	<div id="container">
+		<div id="my-channel">
+			<h5 class="classhead"><p>我的标签</p><span v-on:click="toggleShow" v-if="showdelete">完成</span><span v-on:click="toggleShow" v-else="showdelete">编辑</span></h5>
+			<ul class="clearfix classlist">
+				<li><a href="#">推荐</a></li>
+				<li :data-classid="item.id" v-for="(item,index) in myclassifyList">{{item.text}}<span v-if="showdelete" v-on:click.stop="deleteClass(item,index)" :data-index="index">&times;</span></li>
+			</ul>
+		</div>
+		<div id="rec-channel">
+			<h5 class="classhead"><p>标签推荐</p></h5>
+			<ul class="clearfix classlist">
+				<li :data-classid="item.id" v-for="(item,index) in reclassifyList" v-on:click="addList(item,index)">{{item.text}}</li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/vue.js"></script>
+<script src="js/"></script>
+<script type="text/javascript">
+	var container = new Vue({
+		el: '#container',
+		data: {
+		    myclassifyList: ""/*[
+		      	{ id: '123456', text: '早教讨论' },
+		      	{ id: '123457', text: '营养食谱' },
+		      	{ id: '123458', text: '宝宝起名' },
+		      	{ id: '123459', text: '性格心理' },
+		      	{ id: '123455', text: '安全防护' },
+		      	{ id: '123454', text: '宝宝用品' }
+		    ]*/,
+			reclassifyList: ""/*[
+                { id: '113456', text: '亲子沟通' },
+                { id: '113457', text: '活动游戏' },
+                { id: '113458', text: '奶粉/辅食' },
+                { id: '113457', text: '疾病护理' },
+                { id: '113458', text: '居家用药' }
+			]*/,
+			showdelete: false
+		  },
+		methods: {
+		    addList: function(item,index){
+				this.myclassifyList.push(item);
+				this.reclassifyList.splice(index,1);
+			},
+			toggleShow: function(){
+		        this.showdelete = !this.showdelete;
+			},
+			deleteClass: function(item,index){
+                var deleteclas = this.myclassifyList.splice(index,1);
+                this.reclassifyList.push(item);
+			}
+		}
+	});
+</script>
+</html>
